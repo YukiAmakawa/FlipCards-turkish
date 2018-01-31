@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FlipCards</title>
+    <META charset="UTF-8">
+    <style>
+        td.card {
+            width: 100px;
+            height: 140px;
+            border: 1px solid gray;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            background-color: white;
+            box-shadow: rgb(128, 128, 128) 5px 5px;
+        }
+
+        td.back {
+            background-image: url("card.png");
+            background-size: 100px 140px;
+        }
+    </style>
+    </META>
+</head>
+
+<body onload="init()">
+    <table id="table"></table>
+    <h2>
+        経過時間:<span id="time">0</span>秒
+    </h2>
+</body>
+        <script>
+        "use strict"
+        //配列シャッフル
+        //shuffleは配列Arrayのプロトタイプ（ひな型）、Arrayのひな型から作られたインスタンス（var cards = []など）はそのプロトタイプメソッドであるshuffleを使用できる
+        Array.prototype.shuffle = function() {
+            //配列の長さ1-20と要素の数えかた0-19は異なる
+            var i = this.length;
+            //whileの中は条件文のみ
+            //(i)はiが値を保持している限り、つまり[--i]を繰り返してi==0になるまで
+            while (i) {
+                //ここからカードを順番にswap 
+                //0-19の中からランダムで値を得る
+                var j = Math.floor(Math.random() * i);
+                //配列の（randomで得られた値）番目の値がtとなる　iは1－20の中から選ばれるが、配列は0－19番目までなので先にi-1をする
+                　　 //--iは代入前に引く　i--は代入後
+                var t = this[--i];
+                //↓この[i]は↑の[--i]と同じ（処理前に引いているから）
+                this[i] = this[j];
+                this[j] = t;
+            }
+            return this;
+        }
+
+        
+        //NaN=not a number 数字ではない
+        var timer = NaN;
+        var score = 0;
+        var flipTimer;
+        var prevCard;
+        var startTime;
+        var pic = ["aa","bb","cc","dd","ee","ff","gg","hh","ii","jj","a","b","c","d","e","f","g","h","i","j"];
+
+        function init() {
+            var table = document.getElementById("table");
+            var cards = [];
+            for (var i = 0; i < 20; i++) {
+                //カードは計20枚　10組×2枚なので同じカードを2回push
+                //var cards = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+                cards.push(i);
+                            }
+            cards.shuffle();
+
+            for (var i = 0; i < 4; i++) {
+                var tr = document.createElement("tr");
+                for (var j = 0; j < 5; j++) {
+                    var td = document.createElement("td");
+                    td.className = "card back";
+                    //cards[]の0番目から19番目
+                    //tdにnumberを割り振っていく
+                    td.number = cards[i * 5 + j];
+                    td.onclick = flip;
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+        }
+
+
+
+        function flip(e) {
+            //クリックされたカードのこと
+            var src = e.srcElement;
+            var num = src.number;
+            src.textContent = pic[num];
+            //classをcardにしてトランプの裏面の絵を消す＝文字や絵が見えるようにする
+            src.className = "card";
+            //flipTimerが値を保持している＝動いている、もしくは同じカードを2回クリックのときは何も処理しない＝return
+          
+            
+            //カードが1枚目の時は、prevCardに今クリックしたカード（イベントが発生したオブジェクト）を代入
+            if (prevCard == null) {
+                prevCard = src;
+                return;
+            }
+            //2枚目
+            if (prevCard.number == num - 10 || prevCard.number == num + 10) {
+                //1枚目のカードのe.secElement.number = 2枚目のe.secElement.number
+                //2枚目のカードを開いたことでscoreが10になったら＝すべてカードがそろったら
+                if (++score == 10) {
+                    //経過時間のタイマーを止める
+                    clearInterval(timer);
+                }
+                //2枚目のカードが同じだがまだすべてそろっていない
+                //prevCardに入っている1枚目のカードの情報をリセット
+                prevCard = null;
+                clearTimeout(flipTimer);
+                //カードが揃っていない
+            } else {
+                flipTimer = setTimeout(function() {
+                    //カードの裏面の絵を入れる
+                    src.className = "card back";
+                    //同時にtextContentされてた数字を空白を上書きして消す
+                    src.textContent = "";
+                    //1枚目も同様
+                    prevCard.className = "card back";
+                    prevCard.textContent = "";
+                    prevCard = null;
+                    //flipTimerが値を保持している間は何も処理できないようになっているので、NaNを入れてリセット
+                    flipTimer = NaN;
+                }, 1000);
+            }
+        }
+    </script>
+</html>
