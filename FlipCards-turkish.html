@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>FlipCards</title>
     <META charset="UTF-8">
@@ -7,110 +8,178 @@
 </head>
 
 <body onload="init()">
+    <div id="clear">
+        <img class="cat none" id="Clear" src="clear.jpg">
+    </div>
+
     <table id="table"></table>
+    <img class="get" id="get0" src="food0.png">
+    <img class="get" id="get1" src="food1.png">
+    <img class="get" id="get2" src="food2.png">
+    <img class="get" id="get3" src="food3.png">
+    <img class="get" id="get4" src="food4.png">
+    <img class="get" id="get5" src="food5.png">
+    <img class="get" id="get6" src="food6.png">
+    <img class="get" id="get7" src="food7.png">
+    <img class="get" id="get8" src="food8.png">
+    <img class="get" id="get9" src="food9.png">
+    <img class="get" id="get10" src="food10.png">
+    <img class="get" id="get11" src="food11.png">
+    <img class="get" id="get12" src="food12.png">
+    <img class="get" id="get13" src="food13.png">
+    <img class="get" id="get14" src="food14.png">
+    <img class="get" id="get15" src="food15.png">
+    <img class="get" id="get16" src="food16.png">
+    <img class="get" id="get17" src="food17.png">
+    <img class="get" id="get18" src="food18.png">
+    <img class="get" id="get19" src="food19.png">
+
+    <img class="cat" id="cat1" src="cat1_smile.png">
+    <img class="cat none" id="cat4" src="cat4_laugh.png">
+
 </body>
 <style>
-    table {
-        margin-left:auto;
-        margin-right:auto;
+    body{
+        background-color: floralwhite;
     }
+    
+    .get {
+        display: none;
+        top: 10%;
+        left: 47%;
+        position: absolute;
+        z-index: 10;
+    }
+
+    #Clear {
+        display:none;
+        width: 100%;
+        top: 10%;
+        position: absolute;
+        z-index: 10;
+        margin:0;
+    }
+
+    .cat {
+        display: block;
+        margin: 0 auto;
+    }
+
+
+    .none {
+        display: none;
+    }
+
+    table {
+        margin-top: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        z-index: 0;
+    }
+
 
     td.card {
         width: 100px;
         height: 140px;
         border: 1px solid gray;
         border-radius: 10px;
-        text-align: center;
-        font-size: 36px;
-        font-weight: bold;
         background-color: white;
         background-repeat: no-repeat;
+        display: inline-block;
+
     }
 
     td.back {
         background-image: url("card.png");
         background-size: 100px 140px;
+               
     }
 
-    .animal0 {
-        background-image: url("animal0.png")
+    .food0 {
+        background-image: url("food0.png")
+            
     }
 
-    .animal1 {
-        background-image: url("animal1.png")
+    .food1 {
+        background-image: url("food1.png")
     }
 
-    .animal2 {
-        background-image: url("animal2.png")
+    .food2 {
+        background-image: url("food2.png")
     }
 
-    .animal3 {
-        background-image: url("animal3.png")
+    .food3 {
+        background-image: url("food3.png")
     }
 
-    .animal4 {
-        background-image: url("animal4.png")
+    .food4 {
+        background-image: url("food4.png")
     }
 
-    .animal5 {
-        background-image: url("animal5.png")
+    .food5 {
+        background-image: url("food5.png")
     }
 
-    .animal6 {
-        background-image: url("animal6.png")
+    .food6 {
+        background-image: url("food6.png")
     }
 
-    .animal7 {
-        background-image: url("animal7.png")
+    .food7 {
+        background-image: url("food7.png")
     }
 
-    .animal8 {
-        background-image: url("animal8.png")
+    .food8 {
+        background-image: url("food8.png")
     }
 
-    .animal9 {
-        background-image: url("animal9.png")
+    .food9 {
+        background-image: url("food9.png")
     }
 
-    .animal10 {
-        background-image: url("animal10.png")
+    .food10 {
+        background-image: url("food10.png")
     }
 
-    .animal11 background-image: url("animal11.png")
+    .food11 {background-image: url("food11.png")
     }
 
-    .animal12 {
-        background-image: url("animal12.png")
+    .food12 {
+        background-image: url("food12.png")
     }
 
-    .animal13 {
-        background-image: url("animal13.png")
+    .food13 {
+        background-image: url("food13.png")
     }
 
-    .animal14 {
-        background-image: url("animal14.png")
+    .food14 {
+        background-image: url("food14.png")
     }
 
-    .animal15 {
-        background-image: url("animal15.png")
+    .food15 {
+        background-image: url("food15.png")
     }
 
-    .animal16 {
-        background-image: url("animal16.png")
+    .food16 {
+        background-image: url("food16.png")
     }
 
-    .animal17 {
-        background-image: url("animal17.png")
+    .food17 {
+        background-image: url("food17.png")
     }
 
-    .animal18 {
-        background-image: url("animal18.png")
+    .food18 {
+        background-image: url("food18.png")
     }
 
-    .animal19 {
-        background-image: url("animal19.png")
+    .food19 {
+        background-image: url("food19.png")
     }
 </style>
+
+
+<script src="jquery-3.3.1.min.js"></script>
+
 <script>
     //配列シャッフル
     //shuffleは配列Arrayのプロトタイプ（ひな型）、Arrayのひな型から作られたインスタンス（var cards = []など）はそのプロトタイプメソッドであるshuffleを使用できる
@@ -172,29 +241,70 @@
         var curCard = this;
         var num = this.number;
         //classをcardにしてトランプの裏面の絵を消す＝文字や絵が見えるようにする
-        //animal numにして動物の絵をいれる
-        this.className = "card animal" + num;
+        //food numにして動物の絵をいれる
+        this.className = "card food" + num;
         //カードが1枚目の時は、curCardとprevCardに今クリックしたカード（イベントが発生したオブジェクト）を代入
         if (prevCard == null) {
             prevCard = this;
             return;
         }
+
         //2枚目
         if (prevCard.number == num - 10 || prevCard.number == num + 10) {
             //numとnum-10、numとnum＋10がセットになっている
             //2枚目のカードを開いたことでscoreが10になったら＝すべてカードがそろったら
-            if (++score == 10) {
-                //経過時間のタイマーを止める
-                clearInterval(timer);
+            if (num <= 9){
+                 var get = document.getElementById("get" + num);
+            }else{
+                 var get = document.getElementById("get" + (num - 10));
             }
+           
+            var count = 0;
+            $(get).show();
+            $(get).animate({
+                "top": "450px"
+            }, 2000)
+            $(get).fadeOut();
+            //猫が500ミリ秒おきに3回笑う
+            var smile = setInterval(function() {
+                //繰り返すごとにcountを増やす
+                //noneをつける、外すを繰り返すことで、無表情・笑うを繰り返す
+                count++;
+                $("#cat1").toggleClass("none");
+                $("#cat4").toggleClass("none");
+                if (count > 3) {　
+                    //idをclearIntervalで指定　4回目で自らをclearInterval
+                    clearInterval(smile);　
+                }
+            }, 500);
+
             //2枚目のカードが同じだがまだすべてそろっていない
             //prevCardに入っている1枚目のカードの情報をリセット
             prevCard = null;
             clearTimeout(flipTimer);
+                        if (++score == 10) {
+                //経過時間のタイマーを止める
+                clearInterval(timer);
+                setTimeout(function(){
+                $("#Clear").show();
+                $("#Clear")
+                    .animate({
+                        "top": "+=200px"
+                    }, 1500)
+                    .animate({
+                        "top": "-=100px"
+                    }, 700)
+                    .animate({
+                        "top": "+=100px"
+                    }, 1100)
+                
+                }, 2500)
+
+
+            }
             //カードが揃っていない
         } else {
-            flipTimer = setTimeout(function() {
-　　　　　　　　   //back にして裏面に戻す　カードの形式は維持するのでcardはそのまま
+            flipTimer = setTimeout(function() {　　　　　　　　 //back にして裏面に戻す　カードの形式は維持するのでcardはそのまま
                 //1枚目も同様
                 curCard.className = "card back";
                 prevCard.className = "card back";
