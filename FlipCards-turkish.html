@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>FlipCards</title>
     <META charset="UTF-8">
@@ -8,6 +7,7 @@
 </head>
 
 <body onload="init()">
+    
     <div id="clear">
         <img class="cat none" id="Clear" src="clear.jpg">
     </div>
@@ -44,41 +44,36 @@
     }
     
     .get {
-        display: none;
         top: 10%;
         left: 47%;
         position: absolute;
         z-index: 10;
+        display: none;
     }
 
     #Clear {
-        display:none;
         width: 100%;
         top: 10%;
         position: absolute;
         z-index: 10;
-        margin:0;
+        display:none;
+        margin: 0 auto;
     }
 
     .cat {
         display: block;
         margin: 0 auto;
     }
-
-
     .none {
         display: none;
     }
 
     table {
-        margin-top: 100px;
-        margin-left: auto;
-        margin-right: auto;
         position: relative;
         z-index: 0;
+        margin: 100px auto;
     }
-
-
+    
     td.card {
         width: 100px;
         height: 140px;
@@ -86,14 +81,11 @@
         border-radius: 10px;
         background-color: white;
         background-repeat: no-repeat;
-        display: inline-block;
-
     }
 
     td.back {
-        background-image: url("card.png");
         background-size: 100px 140px;
-               
+        background-image: url("card.png");               
     }
 
     .food0 {
@@ -177,34 +169,9 @@
     }
 </style>
 
-
 <script src="jquery-3.3.1.min.js"></script>
 
 <script>
-    //配列シャッフル
-    //shuffleは配列Arrayのプロトタイプ（ひな型）、Arrayのひな型から作られたインスタンス（var cards = []など）はそのプロトタイプメソッドであるshuffleを使用できる
-    Array.prototype.shuffle = function() {
-        //配列の長さ1-20と要素の数えかた0-19は異なる
-        var i = this.length;
-        //whileの中は条件文のみ
-        //(i)はiが値を保持している限り、つまり[--i]を繰り返してi==0になるまで
-        while (i) {
-            //ここからカードを順番にswap 
-            //0-19の中からランダムで値を得る
-            var j = Math.floor(Math.random() * i);
-            //配列の（randomで得られた値）番目の値がtとなる　iは1－20の中から選ばれるが、配列は0－19番目までなので先にi-1をする
-            　　 //--iは代入前に引く　i--は代入後
-            var t = this[--i];
-            //↓この[i]は↑の[--i]と同じ（処理前に引いているから）
-            this[i] = this[j];
-            this[j] = t;
-        }
-        return this;
-    }
-
-
-    //NaN=not a number 数字ではない
-    var timer = NaN;
     var score = 0;
     var flipTimer;
     var prevCard;
@@ -214,18 +181,35 @@
     function init() {
         var table = document.getElementById("table");
         var cards = [];
+        //push 配列の末尾に0-19の数字を追加
         for (var i = 0; i < 20; i++) {
             cards.push(i);
         }
-        cards.shuffle();
+        //カードシャッフル
+            //配列の長さ1-20と要素の数えかた0-19は異なる
+            var i = cards.length;
+            //whileの中は条件文のみ
+            //(i)はiが値を保持している限り、つまり[--i]を繰り返してi==0になるまで
+            while (i) {
+                //ここからカードを順番にswap 
+                //0-19の中からランダムで値を得る
+                var j = Math.floor(Math.random() * i);
+                //配列の（randomで得られた値）番目の値がtとなる　iは1－20の中から選ばれるが、配列は0－19番目までなので先にi-1をする
+                //--iは代入前に引く　i--は代入後
+                var t = cards[--i];
+                //↓この[i]は↑の[--i]と同じ（処理前に引いているから）
+                cards[i] = cards[j];
+                cards[j] = t;
+            }
 
         for (var i = 0; i < 4; i++) {
             var tr = document.createElement("tr");
             for (var j = 0; j < 5; j++) {
                 var td = document.createElement("td");
+                //className クラスを設定
                 td.className = "card back";
                 //cards[]の0番目から19番目
-                //tdにnumberを割り振っていく
+                //tdオブジェクトにnumberというプロパティを割り振っていく
                 td.number = cards[i * 5 + j];
                 td.onclick = flip;
                 tr.appendChild(td);
@@ -235,20 +219,19 @@
     }
 
 
-
     function flip(e) {
         //クリックされたカードのこと
         var curCard = this;
+        console.log(this);
         var num = this.number;
         //classをcardにしてトランプの裏面の絵を消す＝文字や絵が見えるようにする
-        //food numにして動物の絵をいれる
+        //food numにして食べ物の絵をいれる
         this.className = "card food" + num;
-        //カードが1枚目の時は、curCardとprevCardに今クリックしたカード（イベントが発生したオブジェクト）を代入
+        //1枚目　curCardとprevCardに今クリックしたカード（イベントが発生したオブジェクト）を代入
         if (prevCard == null) {
             prevCard = this;
             return;
         }
-
         //2枚目
         if (prevCard.number == num - 10 || prevCard.number == num + 10) {
             //numとnum-10、numとnum＋10がセットになっている
@@ -258,14 +241,14 @@
             }else{
                  var get = document.getElementById("get" + (num - 10));
             }
-           
-            var count = 0;
+            //揃えたカードのイラストが落ちてくる
             $(get).show();
             $(get).animate({
                 "top": "450px"
             }, 2000)
             $(get).fadeOut();
             //猫が500ミリ秒おきに3回笑う
+            var count = 0;
             var smile = setInterval(function() {
                 //繰り返すごとにcountを増やす
                 //noneをつける、外すを繰り返すことで、無表情・笑うを繰り返す
@@ -282,10 +265,9 @@
             //prevCardに入っている1枚目のカードの情報をリセット
             prevCard = null;
             clearTimeout(flipTimer);
-                        if (++score == 10) {
+            if (++score == 10) {
                 //経過時間のタイマーを止める
-                clearInterval(timer);
-                setTimeout(function(){
+            setTimeout(function(){
                 $("#Clear").show();
                 $("#Clear")
                     .animate({
@@ -298,24 +280,22 @@
                         "top": "+=100px"
                     }, 1100)
                 
-                }, 2500)
+                }, 3300)
 
 
             }
             //カードが揃っていない
         } else {
-            flipTimer = setTimeout(function() {　　　　　　　　 //back にして裏面に戻す　カードの形式は維持するのでcardはそのまま
+            flipTimer = setTimeout(function() {　　　　　　　　 
+                //back にして裏面に戻す　カードの形式は維持するのでcardはそのまま
                 //1枚目も同様
                 curCard.className = "card back";
                 prevCard.className = "card back";
                 //prevcardをリセット
                 prevCard = null;
                 curCard = null;
-                //flipTimerが値を保持している間は何も処理できないようになっているので、NaNを入れてリセット
-                flipTimer = NaN;
-            }, 1000);
+            }, 1500);
         }
     }
 </script>
-
 </html>
