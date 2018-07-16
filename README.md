@@ -6,7 +6,7 @@
 下記のイラスト・トルコ語対照表を見ながらぜひ遊んでみてください。<br/><br/>
 使用技術<br/>
 HTML/CSS/jQuery/JavaScript<br/><br/>
-カードのイラスト・単語対照表<br/>
+## カードのイラスト・単語対照表<br/>
 köfte&nbsp;&nbsp;&nbsp;肉団子<br/>
 pasta&nbsp;&nbsp;&nbsp;ケーキ<br/>
 ekmek&nbsp;&nbsp;&nbsp;パン<br/>
