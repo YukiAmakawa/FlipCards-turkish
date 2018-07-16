@@ -7,3 +7,15 @@
 使用技術<br/>
 HTML/CSS/jQuery/JavaScript<br/><br/>
 カードのイラスト・単語対照表<br/>
+köfte&nbsp;&nbsp;&nbsp;肉団子<br/>
+pasta&nbsp;&nbsp;&nbsp;ケーキ<br/>
+ekmek&nbsp;&nbsp;&nbsp;パン<br/>
+çay&nbsp;&nbsp;&nbsp;お茶<br/>
+balık&nbsp;&nbsp;&nbsp;魚<br/>
+çorba&nbsp;&nbsp;&nbsp;スープ<br/>
+süt&nbsp;&nbsp;&nbsp;牛乳<br/>
+domates&nbsp;&nbsp;&nbsp;トマト<br/>
+tavuk&nbsp;&nbsp;&nbsp;鶏肉<br/>
+portakal suyu&nbsp;&nbsp;&nbsp;オレンジジュース
+
+
